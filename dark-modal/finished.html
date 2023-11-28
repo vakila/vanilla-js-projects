@@ -1,0 +1,133 @@
+<!doctype html>
+<html data-theme="dark">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+	<title>Dark Modal | Professional JavaScript</title>
+	<style>
+		form {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			gap: 1em;
+		}
+	</style>
+
+  <link rel="stylesheet" crossorigin href="/assets/pico-8OHCBZ3Z.css">
+  <link rel="stylesheet" crossorigin href="/assets/darklight-y_0fOSMH.css">
+</head>
+
+<body class="container grid">
+	<header>
+		<h1>dark modal</h1>
+	</header>
+	<nav style="align-self:center;">
+
+
+		<label id="dark-mode">
+			<input type="checkbox" id="toggle" name="toggle" role="switch" checked>
+			Use dark mode
+		</label>
+
+	</nav>
+
+	<main>
+		<article>
+
+			<main id="darklight"></main>
+
+		</article>
+	</main>
+
+	<footer>
+
+	</footer>
+
+	<script id="theme.js">
+		const doc = document.documentElement;
+
+		const toggleDarkMode = (event) => {
+			const currentTheme = doc.getAttribute('data-theme');
+			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+			doc.setAttribute('data-theme', newTheme);
+		}
+
+		const toggle = document.getElementById('toggle');
+
+		toggle.addEventListener("change", toggleDarkMode);
+	</script>
+
+
+	<script id="modal.js">
+
+		class Modal {
+			openButton = document.createElement('button');
+			dialog = document.createElement('dialog');
+
+			constructor(name, parentElement, contentElement) {
+				this.name = name;
+				this.openButton.setAttribute('id', name);
+				this.openButton.textContent = name;
+				this.parent = parentElement;
+				this.content = contentElement;
+				this.closeButton = this.getCloseButton();
+				this.setupForm();
+				this.registerListener();
+			}
+
+			getCloseButton() {
+				const closeButton = document.createElement('button')
+				closeButton.setAttribute('type', 'submit')
+				closeButton.classList.add('secondary');
+				closeButton.textContent = 'Close';
+				return closeButton;
+			}
+
+			setupForm() {
+				const article = document.createElement('article');
+				const form = document.createElement('form');
+				form.setAttribute('type', 'dialog')
+
+				const title = document.createElement('h2');
+				title.textContent = this.name;
+				form.appendChild(title);
+				form.appendChild(this.content);
+				form.appendChild(this.getCloseButton());
+
+				article.appendChild(form);
+				this.dialog.appendChild(article);
+
+			}
+
+			registerListener() {
+				const dialog = this.dialog;
+				console.log(dialog);
+				this.openButton.addEventListener("click", () => {
+					console.log('clicked');
+					dialog.showModal();
+				});
+			}
+
+			render() {
+				this.parent.replaceChildren(this.openButton);
+				this.parent.appendChild(this.dialog);
+			}
+		}
+
+		const parent = document.querySelector('nav');
+		const content = document.getElementById('dark-mode');
+		const darkModal = new Modal('Settings', parent, content);
+		darkModal.render();
+
+
+
+	</script>
+
+</body>
+
+</html>

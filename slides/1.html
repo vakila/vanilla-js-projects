@@ -1,0 +1,1004 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Professional JavaScript</title>
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css"
+		integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css"
+		integrity="sha512-ITH3NSfntO7uI5n+BnxGNXpzDUoOsmAXuG37UDONLxNYIdc0EBBOOQ1xyc+t9ag9ETSuBXFApx+Rod0uURfDYw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css"
+		integrity="sha512-bfCyfT+5Js2CKjpiF7yCtTcNlNTtcdAIHV8DfGLCQuTfTEHTU9uEvhQ/Ty4zv3IRtkFQu8DKeM2MHGka+K/cxA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!-- Theme used for syntax highlighted code -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/night-owl.min.css" integrity="sha512-i5X6Fdn/ZqvGSqPrdMa3FgcpXM/Nr6YccSKFYT93zljl/HZDEpvBbE5Pxp91eiWGccZLrL/LDQJd7fjTRYsVaA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/a11y-dark.min.css"
+		integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<style>
+		.reveal code {
+			color: var(--r-link-color-hover);
+		}
+
+		figcaption {
+			font-size: small;
+			font-style: italic;
+		}
+
+		.accent {
+			color: var(--r-link-color);
+		}
+
+		.columns {
+			width: 100%;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			justify-items: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					# Part 1
+
+					## Advanced JS
+
+					--
+					### Goals
+
+					- Learn more JS features & internals
+					- Explore Functional and Object-Oriented JS
+					- Have some fun with JS in the browser
+
+					--
+					### Ready?
+
+					# Let's go!
+
+					</textarea>
+			</section>
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Review: JS & the DOM
+
+					--
+					
+					Getting HTML elements from JS
+					```js
+					document
+					
+					document.getElementById('my-id')
+					
+					document.querySelectorAll('#my-id')
+					
+					document.documentElement
+					```
+
+					--
+					Attributes
+					```js
+					element.getAttribute("name")
+					
+					element.setAttribute("name", "toggle")
+					```
+
+					--
+
+					Attribute presence vs. value
+
+					```js
+					btn.getAttribute("disabled") // ""
+					
+					btn.setAttribute("disabled", "false")
+					
+					btn.hasAttribute("disabled") // true
+					
+					btn.deleteAttribute("disabled")
+					```
+
+					--
+					Event Handlers
+					```js
+					element.addEventHandler('click', (e) => { 
+						console.log('you clicked on:', e.target)
+					})`
+					```
+
+					--
+
+
+					</textarea>
+			</section>
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Quick Win
+					### Dark Mode
+
+					<img id="dark" src="../assets/darth-fog.gif" alt="clip of Darth Vader emerging from fog"/>
+
+					--
+
+					### `dark-mode.html` 
+
+					1. Grab the `html` element 
+					1. Read the `data-theme` attribute
+					1. Add an event handler to the `#toggle` checkbox  
+					1. Change `data-theme` to `'light'` or `'dark'`
+
+					
+
+
+					--
+
+					
+
+					<img id="impressive" src="../assets/impressive.gif" alt="clip of Darth Vader saying 'Most impressive'"/>
+
+				</textarea>
+			</section>
+
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+
+					## Time 
+					
+					(and other problems)
+
+			
+					<figure>
+						<img width="500" src="../assets/dali.jpg" alt="'The Persistence of Memory' by Salvador Dali"/>
+						<figcaption>
+							'The Persistence of Memory' by Salvador Dali
+						</figcaption>
+					</figure>
+
+					--
+
+					## Review: Async JS
+
+					`async` and `await`
+
+					```js
+					async function fetchData() {
+						const response = await fetch("some.api/resource");
+						return await response.json();
+					}
+					```
+
+					--
+
+					### JS, why are you like this?
+
+					![Meme with text "Y U NO JUST RUN CODE NOW"](../assets/y-u-no-run.png)
+
+
+					--
+
+					![History channel dude meme: "It's quite simple... but at the same time, quite complex"](../assets/simple.jpg)
+
+					--
+
+					- Some actions take time to complete
+					- The browser needs to stay responsive
+					- But JS is <span class="accent">single-threaded</span> (does 1 thing at a time)
+
+					Let's dig a little deeper to understand how it works!
+
+					--
+
+
+					--
+					<div class="columns">
+						<div>
+							<h3>JS runtime</h3>
+							e.g. V8, SpiderMonkey
+						</div>
+						<div>
+							<h3>Browser</h3>
+							e.g. Chrome, Firefox
+						</div>
+					</div>
+
+					--
+
+					<span></span> | <span></span>
+					-- | --
+					<span class="accent">Call Stack</span> | Functions stack up when called, run to completion, pop off when done
+					<span class="accent">Heap</span> | Data is stored in a big ol' pile of memory
+					<span class="accent">Queue</span> | Messages get in line to send function calls to the stack
+					<span class="accent">Event Loop</span> | Infinite `while` pops 1st message from queue & sends call to stack (if empty)
+					<span></span> | <span></span>
+				
+					--
+
+					<!-- Browser/JS internals diagram-->
+
+					![Diagram of a call stack with frames on it, a heap with objects in it, and a queue with messages in it](../assets/internals.png)
+
+
+					--
+
+					![Lord of the Rings meme: 'One does not simply... completely explain complex topics with a single meme'](../assets/simply.jpg)
+
+
+					--
+
+					<figure>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/8aGhZQkoFbQ?si=V0wopWrBzo5sU0ZL&amp;start=746" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					<figcaption>'What the heck is the event loop anyway?' by Phillip Roberts</figcaption>
+					</figure>
+
+					--
+
+
+					## Browser APIs
+
+					<img alt="Image of Inspector Gadget with lots of gadgets" src="../assets/gadget.jpg" height="500" />
+
+					--
+
+					### Window where JS is running
+
+					```js
+					console.log(window);
+					// Window { document: document, location: Location{...}, ... }
+
+					window.location.toString();
+					// https://developer.mozilla.org/en-US/docs/Web/API/Window
+
+					document === window.document // true
+
+					console === window.console // true
+					```
+
+					--
+
+					### User's Browser
+
+					```js
+					console.log(navigator);
+					// Navigator { 
+					//	permissions: Permissions, 
+					//	mediaCapabilities: MediaCapabilities, 
+					//	oscpu: "Intel Mac OS X 10.15", 
+					//	...
+					// }
+
+					console.log(navigator.userAgent);
+					// "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15) 
+					// Gecko/20100101 Firefox/119.0" 
+
+					```
+
+					--
+
+					### Dates & times
+
+					```js
+					const today = new Date();
+
+					console.log(today.toDateString());
+					// "Tue Nov 28 2023" 
+
+					console.log(today.toLocaleDateString());
+					// 11/28/2023
+
+					console.log(Date.now())
+					// 1701155454525
+					```
+
+					--
+
+					### One trillion
+
+					![Clip from Austin Powers zooming in on Dr. Evil raising pinky to mouth](../assets/dr-evil.gif)
+
+					### milliseconds
+
+					--
+
+					### Timing things
+
+					```js
+					const start = Date.now();
+					longRunningOperation();
+					const end = Date.now();
+
+					const elapsed = end - start;
+					console.log(`that took ${elapsed/1000}s`);
+					```
+					--
+
+					### `console.time`
+
+					```js
+					console.time('stopwatch');
+
+					runAround();
+					console.timeLog('stopwatch');
+					// stopwatch: 17293ms
+					
+					console.time('lap');
+					runAround();
+					console.timeEnd('lap');
+					// lap: 3850ms - timer ended
+
+					runAround();
+					console.timeEnd('stopwatch');
+					stopwatch: 24711ms - timer ended
+					```
+
+					--
+
+					### Timeouts
+
+					```js
+					console.log('prints immediately');
+
+					setTimeout(() => console.log('prints >1 second later'), 1000);
+
+					console.log('prints immediately?');
+					```
+
+					--
+
+					![Spongebob Squarepants still saying "Many hours later..."](../assets/later.jpg)
+					
+					--
+
+					### Canceling timers
+
+					```js
+					const countdown = setTimeout(() => {
+						console.log('liftoff')
+					}, 10000);
+
+					console.log(countdown); // 123 (timeout id)
+
+					abortButton.addEventListener('click', () => {
+						clearTimeout(countdown)
+					});
+					```
+					--
+
+					### Intervals
+
+
+					```js
+					const traveling = setInterval(() => {
+						console.log('Are we there yet?');
+					}, 1000);
+
+					// arrive
+					clearInterval(traveling)
+					```
+
+					--
+
+					### JS jargon
+
+					The <span class="accent">Event Loop</span> is how JS avoids <span class="accent">blocking</span> the browser's execution
+
+					--
+					
+					![Hotline Bling meme with Drake disapproving of "Blocking (sync)" and approving of "Non-blocking (async)"](../assets/drake-approves.png)
+
+					<!-- --
+					
+					### Speaking of callbacks...
+
+					```js
+					document.addEventListener("keydown", () => {
+						console.log("hotline ready");
+						setTimeout(() => {
+							console.log("bling");
+						}, 1000);
+					});
+					``` -->
+
+					
+				</textarea>
+			</section>
+
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Quick Win
+					### Random Clock
+
+					![Black and white movie clip of women randomly dressed up as clocks and dancing](../assets/clocks.gif)
+
+					--
+
+					### `clock.html` 
+
+					1. Get the `p` element with id `'time'`
+					1. Get the current time as a localized time string
+					1. Set the text of the `#time` element to the time string
+					1. Style the `p` with random values for `top`, `left`, and `color`
+					1. Repeat every 3 seconds
+
+					--
+
+					![Clip of Drake dancing in Hotline Bling video](../assets/hotline-bling.gif)
+
+
+
+				</textarea>
+			</section>
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+
+				## Functions
+
+				--
+
+				### Back to callbacks...
+
+				`addEventListener(eventName, handlerFn)` 
+
+				`setTimeout(callbackFn, delay)` 
+				
+				`setInterval(callbackFn, interval)` 
+
+				It's actually cool that JS can do this!
+
+				--
+
+				### Programming jargon
+
+				JS has <span class="accent">first-class functions</span> (functions can be passed around to functions like
+				any other data)
+
+				Functions that operate on other functions are <span class="accent">higher-order functions</span>
+
+				--
+
+				### Functions as return values
+
+				```js
+				function makeLogger(loglevel) {
+					return function log(msg) {
+						console[loglevel](msg);
+					}
+				}
+
+				let level = 'warn';
+				const worryUser = makeLogger(level);
+				worryUser('ohno');
+				// Warning: ohno
+				```
+
+				--
+
+				### But what if we...
+
+				```js
+				level = 'error';
+				worryUser('terrible mistake');
+				// Warning: terrible mistake
+				```
+
+				--
+
+				### Review: Scope
+
+				![Clip from Hey Arnold of a stretch limo arriving, caption "(horn honks)"](../assets/limo.gif)
+
+				--
+
+				`worryUser` "remembers" what `level` was
+
+				_when `worryUser` was declared_
+
+				--
+
+				<img width="500" alt="Still from Jurassic Park of mosquito trapped in amber" src="../assets/amber.jpg" />
+
+				--
+
+
+				### Programming jargon
+
+				A <span class="accent">closure</span> is a function that <span class="accent">closes</span> over values in
+				its defining scope, remembering them forever
+
+				--
+
+				We've entered the realm of<br><span class="accent">functional programming</span>
+
+				![Clip from Jurassic Park of Samuel L Jackson's character saying "Hold on to your butts"](../assets/butts.gif)
+
+			</textarea>
+			</section>
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+
+					## Programming paradigms 
+
+					--
+
+
+
+					Paradigm | Meta-Paradigm | Focus
+					--- | --- | ---
+					<span class="accent">FP</span> | Declarative | "what"
+					<span class="accent">OOP</span> | Imperative | "how"
+					<span></span> | <span></span>
+
+					
+
+					--
+
+					### Object Oriented Programming  (OOP)
+
+					```js
+					const config = { paradigm: "imperative" };
+					const program = new Program(config);
+					program.run = (args) => {
+						console.log(`programming ${paradigm}ly`);
+					}
+					const output = program.run();
+					```
+
+					--
+
+					### Functional Programming (FP)
+
+					```js
+					(function program({paradigm}) {
+						return function run(args) {
+							return `do stuff ${paradigm}ly`
+						}
+					})({paradigm: "declarative"})()
+					```
+
+					--
+
+					### Sidebar: JS jargon
+
+					<span class="accent">IIFE</span>: Immediately Invoked Function Expression
+
+					```js
+					// Function expression
+					function bling(line) {
+						console.log('one thing');
+					} 
+
+					// Invoked function
+					bling('hotline') // 'one thing'
+
+					// IIFE
+					(function bling(line) {
+						console.log('one thing')
+					})()
+					```
+
+					
+					--
+
+					JS is called a <span class="accent">multi-paradigm</span> language
+
+
+					<img alt="Epic handshake meme with 'OOP' on Carl's arm, 'FP' on Arnold's arm, and 'JS' on their clasped hands" src="../assets/handshake.png" width="400" />
+					
+					--
+
+					But under the hood...
+
+					![Clips from Scooby Doo where various villains are unmasked](../assets/meddling.gif)
+
+					...everything is Objects!
+
+				</textarea>
+			</section>
+
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Object-Oriented Programming
+
+					<img alt="Meme with text 'Life is a prototype'" src="../assets/prototype.gif" width="300" />
+
+					--
+
+					### Review: `for ... of`
+
+					```js
+					const engines = ['V8', 'SpiderMonkey'];
+					for (let eng of engines) {
+						console.log(eng.toUpperCase());
+					}
+					// V8
+					// SPIDERMONKEY
+
+					const doc = document.documentElement;
+					for (let child of doc.children) {
+						console.log(child.tagName);
+					}
+					// HEAD
+					// BODY
+					```
+
+					--
+
+					### Review: `.map()`
+
+					```js
+					engines.map(e => e.toUpperCase);
+					// Array [ "V8", "SPIDERMONKEY" ]
+
+					doc.children.map(c => c.tagName);
+					// TypeError: doc.children.map is not a function
+					```
+
+					--
+
+					![Meme of confused woman with math formulas](../assets/math.gif)
+
+					--
+
+					```js
+					typeof engines
+					// "object"
+
+					typeof doc.children
+					// "object"
+
+					```
+
+					--
+
+					![Clip from Parks & Recreation of Ben saying "Nothing you're saying is helpful"](../assets/helpful.gif)
+
+					--
+
+					### Every JS object has a _prototype_
+
+					```js
+					Object.getPrototypeOf(engines) 
+					// Array []
+
+					Object.getPrototypeOf(doc.children) 
+					// HTMLCollectionPrototype { ... }
+					```
+					--
+
+					### Follow the prototype chain... 
+
+					```js
+					engines.__proto__
+					// Array []
+
+					engines.__proto__.__proto__
+					// Object {}
+
+					engines.__proto__.__proto__.__proto__
+					// null
+					```
+
+					--
+
+					![Food chain diagram with Zombies at the top](../assets/zombies.jpg)
+
+					--
+
+					### Recognize this?
+
+					```js
+					engines.__proto__.__proto__.toString()
+					// [object Object]
+					```
+
+					![Tweet by @iamdevloper saying "If in doubt, and bored, set your username to '[object Object] and wait for the confused looks..."](../assets/iamdevloper.png)
+					
+					--
+
+					### (Own) Properties
+
+					```js
+					const obj = { name: "objectina", isGenie: true }
+					Object.entries(obj);
+					// Array [ ["name", "objectina"], ["isGenie", true] ]
+
+					obj.toString
+					// function toString()
+
+					obj.hasOwnProperty('toString')
+					// false
+
+					obj.toString()
+					// [object Object]
+					```
+
+					--
+
+					### Resolving our `.map` confusion:
+
+					```js
+					engines.hasOwnProperty('map')
+					// false
+
+					engines.__proto__.hasOwnProperty('map')
+					// true
+					```
+
+					`Array` supplies the `.map` property
+
+					`HTMLCollection` is not an array, doesn't have `.map`
+
+					--
+
+					But how did `for ... of` work then?
+
+					![Meme of little girl looking confused](../assets/confused.gif)
+
+					
+
+
+				</textarea>
+			</section>
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+
+					## Iteration in JS
+
+					--
+
+					### Ways to iterate
+
+					`.map()` only works on `Array` and its descendants
+
+					but
+					
+					`for ... of` works on any <span class="accent">iterable</span> object
+
+					--
+
+					### What makes an object "iterable"?
+
+					An iterable object has an <span class="accent">@@iterator</span> method, i.e.:
+					
+					- the object has a `[Symbol.iterator]` property
+					- the value of that property is a function which returns an <span class="accent">iterator</span> object
+
+					--
+
+					### OK... so what makes an object an "iterator"?
+
+					- Has a `.next()` method
+					- `.next()` returns an object of shape<br>`{ done, value }`
+					
+
+					--
+
+					### Generators 
+
+					- Special functions declared with `function*`
+					- Can _pause_ execution with `yield` before a final stop with `return`
+					- Qualify as both an `iterator` and an `iterable`
+					- Make great values for `[Symbol.iterator]`
+
+					--
+
+					```js
+					function* dogerator() {
+						yield 'so iterator';
+						yield 'much generate';
+						yield 'wow';
+						return;
+					}
+
+					const meme = {
+						[Symbol.iterator]: dogerator
+					};
+
+					for (let phrase of meme) {
+						console.log(phrase);
+					}
+
+					```
+
+
+
+
+				</textarea>
+			</section>
+
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Quick Win
+					### Clockerator
+
+					--
+
+					### `clockerator.html` 
+
+					Build out the random clock to:
+					1. Implement a `getClock()` function that returns an iterable
+					1. The values of the iterable should be the current time, date, and day strings
+					1. Update the text of the `#time` element to the time string, `#date` to date, `#day` to day
+					1. Style each element with random values for `top`, `left`, and `color`
+					1. Repeat every 3 seconds
+
+
+				</textarea>
+			</section>
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Classy JS
+
+					<img alt="Meme of classy Winnie the Pooh" src="../assets/pooh.jpg" width="500" />
+
+					--
+
+					### `new` operator
+
+					Creates a new _instance_ of a given object type, e.g. `new Date()`
+
+					`new` calls a <span class="accent">constructor</span> function that creates an object of the given type
+
+					--
+
+					### Constructors
+
+					Constructors use `this` to assign object properties
+
+					```js
+					function Meme(img, text) {
+						this.img = img;
+						this.text = text;
+					}
+
+					const pooh = new Meme('regularPooh.jpg', 'using functions');
+					// { img: regularPoohImg, text: 'functions' }
+					pooh.fancy // undefined
+					```
+
+					--
+
+					### `class` 
+
+					Fancy syntax for declaring custom object types (classes)
+
+					```js
+					class ClassyMeme {
+						// property declarations
+						fancy = true;
+						img;
+						text;
+
+						// new instance constructor
+						constructor(img, text) {
+							this.img = img;
+							this.text = text;
+						}
+
+						// method
+						begPardon() {
+							console.log('Do you have any Grey Poupon?')
+						}
+					}
+
+					const ooh = new ClassyMeme('fancyPooh.jpg', 'using classes')
+					ooh.fancy // true
+					ooh.begPardon()
+					```
+				</textarea>
+			</section>
+
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+
+					## Moar Browser APIs!
+
+
+					--
+
+					### Media Devices
+
+					```js
+					const devices = navigator.mediaDevices;
+					const deviceList = await devices.enumerateDevices();
+
+					console.log(deviceList);
+					// Array [ MediaDeviceInfo, MediaDeviceInfo ]
+
+					console.log(deviceList[0])
+					```
+
+					--
+
+					### `getUserMedia`
+
+					```js
+
+					const avStream = await navigator.mediaDevices.getUserMedia({
+						audio: true,
+						video: true 
+					});
+
+					```
+
+				</textarea>
+			</section>
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Quick Win
+					### Selfie Cam
+
+
+				</textarea>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"
+		integrity="sha512-131e3mIrDAyUD075SVzvIjS0g97uDg0+/qAobDHd++h+lgFi4z88DVOpidm06jpb+0PzK4kcm9w79r6EHV0SkA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"
+		integrity="sha512-nLsCkPS/rdxRVOkxiKnld9KhQ24V/5kRChzSZ3MoFODykbWyBlQRsHLrbpN3J4LabYBnXIp1EnRIo3ifvyiQIg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.min.js"
+		integrity="sha512-QAU7Ux8iEB53koLKFCtddfFp0D1+uQWoX3ROnRDLeiE98XHOkMciaup0Spc014jQAuJaqz8VjUZdBqriheI4Lg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"
+		integrity="sha512-U3fPDUX5bMrn1wnYqjaK44MFA9E6MKS+zPAg9WPAGF5XhReBeDj3FGaA831CjueG+YJxYA3WaO/m33kMIoOs/A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<!-- CopyCode plugin for copy button on code samples -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/reveal.js-copycode@1.0.4/plugin/copycode/copycode.js"></script>
+
+	<script>
+		// Slides powered by revealjs.com
+
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode]
+		});
+
+	</script>
+
+</body>
+
+</html>

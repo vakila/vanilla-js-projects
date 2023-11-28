@@ -1,0 +1,55 @@
+<!doctype html>
+<html data-theme="dark">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+	<title>Dark Mode | Professional JavaScript</title>
+
+  <link rel="stylesheet" crossorigin href="/assets/pico-8OHCBZ3Z.css">
+  <link rel="stylesheet" crossorigin href="/assets/darklight-y_0fOSMH.css">
+</head>
+
+<body class="container grid">
+	<header>
+		<h1>dark mode</h1>
+	</header>
+
+	<nav style="align-self:center;">
+
+		<label>
+			<input type="checkbox" id="toggle" name="toggle" role="switch" checked>
+			Use dark mode
+		</label>
+
+	</nav>
+
+	<main>
+		<article>
+
+			<main id="darklight"></main>
+
+		</article>
+	</main>
+
+	<footer>
+
+
+	</footer>
+	<script id="theme.js">
+		const doc = document.documentElement;
+
+		const toggleDarkMode = (event) => {
+			const currentTheme = doc.getAttribute('data-theme');
+			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+			doc.setAttribute('data-theme', newTheme);
+		}
+
+		document.getElementById('toggle').addEventListener("change", toggleDarkMode)
+	</script>
+</body>
+
+</html>

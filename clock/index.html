@@ -1,0 +1,65 @@
+<!doctype html>
+<html data-theme="dark">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+	<title>Random Clock | Professional JavaScript</title>
+	<style>
+		#clock {
+			width: 100%;
+			height: 50vh;
+			position: relative;
+		}
+
+		#clock p {
+			width: 200px;
+			position: relative;
+			font-size: xx-large;
+		}
+	</style>
+
+  <link rel="stylesheet" crossorigin href="/assets/pico-8OHCBZ3Z.css">
+  <link rel="stylesheet" crossorigin href="/assets/spacing-ww2LRCCD.css">
+</head>
+
+<body class="container">
+	<header>
+		<h1>random clock</h1>
+	</header>
+
+	<main class="container">
+		<article>
+			<div id="clock">
+				<p id="time"></p>
+
+			</div>
+		</article>
+	</main>
+
+	<script id="clock.js">
+
+		const time = document.getElementById("time");
+
+		function getRandomNumber(max) {
+			return Math.floor(Math.random() * max);
+		}
+
+		function updateTime() {
+			const currentTime = new Date();
+			const [x, y] = [getRandomNumber(80), getRandomNumber(80)];
+			const color = `hsl(${getRandomNumber(360)}, 100%, 80%)`
+			time.innerText = currentTime.toLocaleTimeString();
+			time.setAttribute("style", `top: ${x}%; left: ${y}%; color: ${color}`)
+		}
+
+		updateTime()
+		setInterval(() => updateTime(), 3000)
+
+	</script>
+</body>
+
+</html>
