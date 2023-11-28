@@ -43,65 +43,6 @@
 
 	<script id="clock.js">
 
-		const week = [
-			"Sunday",
-			"Monday",
-			"Tuesday",
-			"Wednesday",
-			"Thursday",
-			"Friday",
-			"Saturday"
-		];
-
-		const clock = document.getElementById("clock");
-
-		function getRandomNumber(max) {
-			return Math.floor(Math.random() * max);
-		}
-
-		function getClock() {
-			const now = new Date();
-			return {
-				[Symbol.iterator]: function* () {
-					yield {
-						text: now.toLocaleTimeString(),
-						id: 'time'
-					};
-
-					yield {
-						text: now.toLocaleDateString(),
-						id: 'date'
-					};
-
-					yield {
-						text: week[now.getDay()],
-						id: 'day'
-					};
-
-				}
-			};
-		}
-
-		function updateText(text, element) {
-			const [x, y] = [getRandomNumber(75), getRandomNumber(75)];
-			const color = `hsl(${getRandomNumber(360)}, 100%, 80%)`
-			element.innerText = text;
-			element.setAttribute("style", `top: ${x}%; left: ${y}%; color: ${color}`)
-		}
-
-		function updateAll() {
-			for (let { text, id } of getClock()) {
-				const el = document.getElementById(id);
-				updateText(text, el)
-			}
-		}
-
-		updateAll()
-		setInterval(() => {
-			updateAll()
-		}, 3000)
-
-
 
 	</script>
 </body>

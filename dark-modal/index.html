@@ -65,64 +65,6 @@
 
 	<script id="modal.js">
 
-		class Modal {
-			openButton = document.createElement('button');
-			dialog = document.createElement('dialog');
-
-			constructor(name, parentElement, contentElement) {
-				this.name = name;
-				this.openButton.setAttribute('id', name);
-				this.openButton.textContent = name;
-				this.parent = parentElement;
-				this.content = contentElement;
-				this.closeButton = this.getCloseButton();
-				this.setupForm();
-				this.registerListener();
-			}
-
-			getCloseButton() {
-				const closeButton = document.createElement('button')
-				closeButton.setAttribute('type', 'submit')
-				closeButton.classList.add('secondary');
-				closeButton.textContent = 'Close';
-				return closeButton;
-			}
-
-			setupForm() {
-				const article = document.createElement('article');
-				const form = document.createElement('form');
-				form.setAttribute('type', 'dialog')
-
-				const title = document.createElement('h2');
-				title.textContent = this.name;
-				form.appendChild(title);
-				form.appendChild(this.content);
-				form.appendChild(this.getCloseButton());
-
-				article.appendChild(form);
-				this.dialog.appendChild(article);
-
-			}
-
-			registerListener() {
-				const dialog = this.dialog;
-				console.log(dialog);
-				this.openButton.addEventListener("click", () => {
-					console.log('clicked');
-					dialog.showModal();
-				});
-			}
-
-			render() {
-				this.parent.replaceChildren(this.openButton);
-				this.parent.appendChild(this.dialog);
-			}
-		}
-
-		const parent = document.querySelector('nav');
-		const content = document.querySelector('label');
-		const darkModal = new Modal('Settings', parent, content);
-		darkModal.render();
 
 
 
