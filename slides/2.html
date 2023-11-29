@@ -1,0 +1,492 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Part 2 | Professional JavaScript</title>
+	<link rel="icon" type="image/svg+xml" href="/professional-javascript/favicon.svg" />
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css"
+		integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css"
+		integrity="sha512-ITH3NSfntO7uI5n+BnxGNXpzDUoOsmAXuG37UDONLxNYIdc0EBBOOQ1xyc+t9ag9ETSuBXFApx+Rod0uURfDYw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css"
+		integrity="sha512-bfCyfT+5Js2CKjpiF7yCtTcNlNTtcdAIHV8DfGLCQuTfTEHTU9uEvhQ/Ty4zv3IRtkFQu8DKeM2MHGka+K/cxA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!-- Theme used for syntax highlighted code -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/night-owl.min.css" integrity="sha512-i5X6Fdn/ZqvGSqPrdMa3FgcpXM/Nr6YccSKFYT93zljl/HZDEpvBbE5Pxp91eiWGccZLrL/LDQJd7fjTRYsVaA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/a11y-dark.min.css"
+		integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<style>
+		.reveal code {
+			color: var(--r-link-color-hover);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Part 2
+
+					### Developer Workflow
+
+					--
+					### Goals
+
+					- Keep practicing what we've seen so far
+					- Get familiar with common dev workflows
+					- Build a client-side app with modern tooling
+					- Deploy a project site to production
+
+					--
+					### Ready?
+
+					# Let's go!
+
+					</textarea>
+			</section>
+
+
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## JS outside the Browser 
+
+					<img src="../assets/node.png" alt="Node.js logo" width="500" />
+
+					--
+
+					### Node.js 
+
+					[nodejs.org](https://nodejs.org)
+
+					- Server-side JS runtime based on V8
+					- Con: Doesn't get all the Browser's APIs
+					- Pro: Has its own system-related interfaces
+
+					--
+
+					- Download & Install 
+					- Open a new Terminal window
+					- Check that it's working:
+					
+					```
+					$ node --version
+					20.10.0
+					$ node
+					> console.log('hello world')
+					```
+
+
+					--
+
+					### Running Node scripts
+
+					```js
+					// whereAmI.js
+					console.log('You are here:');
+					const currentDir = process.cwd();
+					setTimeout(() => console.log(currentDir), 1000);
+					```
+
+					```
+					$ node whereAmI.js
+					```
+
+					--
+
+					### Browser vs. Node APIs
+
+					<span></span> | Browser | Node
+					-- | -- | --
+					setTimeout | y | y
+					process | n | y
+					window | y | n
+
+					--
+
+
+					<img src="../assets/npm.png" alt="npm logo" width="500" />
+
+					### [npmjs.com](https://npmjs.com)
+
+					- Package manager for JS (but not the only one!)
+					- Comes with Node
+					- 2+ million packages!!
+
+					--
+
+
+					### Creating a new package
+
+					```
+					$ mkdir where-am-i
+					$ mv whereAmI.js where-am-i/
+					$ cd where-am-i
+					$ npm init
+					```
+
+					--
+
+					### `package.json`
+
+					```json
+					{
+						"name": "where-am-i",
+						"version": "1.0.0",
+						"description": "Find out where your JS script is running",
+						"main": "whereAmI.js",
+						"scripts": {
+							"test": "echo \"Error: no test specified\" && exit 1"
+						},
+						"author": "Anjana",
+						"license": "ISC"
+					}
+					```
+
+					--
+
+					### Running scripts
+
+					```
+					$ npm run test
+					Error: no test specified
+					```
+
+					--
+
+					### Custom scripts
+
+					```
+					"scripts": [
+						"find-me": "node whereAmI.js"
+					]
+					```
+
+					```
+					$ npm run find-me
+					```
+
+					--
+
+					### Installing dependencies 
+
+					```
+					$ npm install cowsay
+					```
+					or
+					```
+					$ npm i cowsay
+					```
+
+					--
+
+					### Using dependencies 
+
+					```js
+					import { say } from 'cowsay'
+
+					const currentDir = process.cwd();
+					const message = 'Moo are here:\n' + currentDir
+					console.log(say({ text: message}));
+					
+					```
+
+					--
+
+					### Modules in JS
+
+					(and other problems)
+
+					<img src="../assets/nasa.gif" alt="Animated diagram of the Integrated Science Instrument Module of the Webb space telescope" width="500" />
+
+
+					--
+
+					- 1995: JS is just for click handling, right?
+					- 2010s: Node.js & server-side complexity
+					- now: Massive client-side projects
+					
+					--
+
+					### CommonJS modules
+
+					Original Node module system, still around
+
+					```js
+					const cowsay = require('cowsay');
+
+					module.exports = {
+						mooove: () => cowsay.say({text: 'Get going'})
+					};
+					```
+
+					--
+
+					### ECMAScript modules
+
+					The new(ish) hotness, supported by browsers too
+
+					```js
+					import { say } from 'cowsay';
+	
+					export const mooove = () => cowsay.say({text: 'Get going'})
+					```
+
+					--
+
+					### ESM FTW
+
+					![Gif of the Mandalorian and baby Yoda with text "This is the way"](../assets/the-way.gif)
+
+					--
+
+					### In the browser
+
+					```html
+					<script type="module">
+						// import away
+					</script>
+					```
+
+					--
+
+					### In Node
+
+					Option 1: `.mjs` extension
+
+					Option 2: `"type": "module"` in `package.json`
+
+					--
+
+					```
+					% npm run find-me
+
+					> where-am-i@1.0.0 find-me
+					> node whereAmI.js
+
+					 _____________________________________
+					/ Moo are here:                       \
+					\ /Users/anjana/Dev/vakila/where-am-i /
+					 -------------------------------------
+							\   ^__^
+							 \  (oo)\_______
+								(__)\       )\/\
+									||----w |
+									||     ||
+					```
+						
+
+				</textarea>
+			</section>
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Modern JS development
+					
+					![Clip from A Christmas Story of Ralphie being wrapped up in warm clothes](../assets/ralphie.gif)
+
+					--
+
+					### The modern web is a blessing...
+
+					![Clip from Aladdin of Genie demonstrating his "phenomenal cosmic powers"](../assets/phenomenal.gif)
+
+					--
+
+					### ...and a curse
+
+					![Clip from Aladdin of Genie demonstrating his "itty bitty living space"](../assets/itty-bitty.gif)
+
+					--
+
+					
+					- 1995: Web pages get a little JS, as a treat
+					- 2010s: Tooling evolves to bundle & optimize large apps (pre-ESM)
+					- now: Massive JS projects, super complex workflows
+
+					--
+
+					<img src="../assets/complicated.jpg" alt="Homer Simpson looking at a complicated diagram of a nuclear reactor" />
+
+					--
+
+					Not to worry, the community has come up with helpful tools & frameworks! 
+					
+					<img src="../assets/ecosystem.png" alt="Many logos of various projects in the web ecosystem" />
+
+					--
+
+					<img src="../assets/homer.gif" alt="Homer Simpson sitting at a control panel with many flashing buttons, caption 'What do I do? What do I do? (sobbing)'" />
+
+					--
+
+					### Battling the web dev overwhelm 
+
+					- Principles > Tools
+					- If it fits, it sits
+					- Stay open to change
+
+				
+					</textarea>
+			</section>
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Vite
+
+					[vitejs.dev](https://vitejs.dev)
+
+					<img alt="Vite logo" src="../assets/vite.png" width="300" />
+
+					--
+
+					### Why for JS?
+
+					- Fancy dev features
+					- Supports lots of frameworks
+					- Extensible plugins
+
+					--
+
+					### Why for this course?
+
+					- Approachable (imo)
+					- Pretty widely used
+					- Suits a single-page app
+					- Lots of rabbit holes for the curious
+
+
+					--
+
+					### Our first Vite app
+
+					```
+					$ npm create vite@latest
+					```
+
+					Uses `create-vite` npm package to bootstrap a project from a template
+
+
+					
+					
+				</textarea>
+			</section>
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Vite Selfie Cam
+
+					--
+					## Moar Browser APIs!
+
+					### `getUserMedia`
+
+					```js
+
+					const avStream = await navigator.mediaDevices.getUserMedia({
+						audio: true,
+						video: true 
+					});
+
+					```
+
+					--
+
+					### Videos
+
+					```js
+					const video = document.querySelector('video');
+					video.srcObject = avStream;
+					await video.play();
+					```
+
+					--
+
+					### Canvas 
+
+					```js
+					const canvas = document.querySelector('canvas');
+					const context = canvas.getContext("2d");
+
+					context.fillStyle = "yellow";
+					context.fillRect(0, 0, 100, 100); // (x, y, width, height)
+					```
+					--
+
+					```
+					context.fillStyle = "black";
+					context.font = "50px sans-serif";
+					context.fillText("JS", 40, 90, 50); // (text, x, y, maxWidth)
+					```
+
+					![Canvas coordinates diagram with (0,0) at top left corner](../assets/canvas.png)
+
+					--
+
+					### Canvas + Image/Video
+
+					```js
+					context.drawImage(video, 0, 0); // (x, y)
+					```
+
+
+				</textarea>
+			</section>
+
+
+
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"
+		integrity="sha512-131e3mIrDAyUD075SVzvIjS0g97uDg0+/qAobDHd++h+lgFi4z88DVOpidm06jpb+0PzK4kcm9w79r6EHV0SkA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"
+		integrity="sha512-nLsCkPS/rdxRVOkxiKnld9KhQ24V/5kRChzSZ3MoFODykbWyBlQRsHLrbpN3J4LabYBnXIp1EnRIo3ifvyiQIg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.min.js"
+		integrity="sha512-QAU7Ux8iEB53koLKFCtddfFp0D1+uQWoX3ROnRDLeiE98XHOkMciaup0Spc014jQAuJaqz8VjUZdBqriheI4Lg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"
+		integrity="sha512-U3fPDUX5bMrn1wnYqjaK44MFA9E6MKS+zPAg9WPAGF5XhReBeDj3FGaA831CjueG+YJxYA3WaO/m33kMIoOs/A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<!-- CopyCode plugin for copy button on code samples -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/reveal.js-copycode@1.0.4/plugin/copycode/copycode.js"></script>
+
+	<script>
+		// Slides powered by revealjs.com
+
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode]
+		});
+
+	</script>
+
+</body>
+
+</html>

@@ -65,6 +65,24 @@
 
 	<script id="modal.js">
 
+		class Form {
+			element = document.createElement('form');
+			heading = document.createElement('h2');
+			closeButton = document.createElement('button');
+
+			constructor(type, title, content) {
+				this.element.setAttribute('type', type)
+				this.heading.textContent = title;
+				this.closeButton.setAttribute('type', 'submit')
+				this.closeButton.classList.add('secondary');
+				this.closeButton.textContent = 'Close';
+				this.element.appendChild(this.heading);
+				this.element.appendChild(content);
+				this.element.appendChild(this.closeButton);
+			}
+
+		}
+
 		class Modal {
 			openButton = document.createElement('button');
 			dialog = document.createElement('dialog');
@@ -75,40 +93,20 @@
 				this.openButton.textContent = name;
 				this.parent = parentElement;
 				this.content = contentElement;
-				this.closeButton = this.getCloseButton();
-				this.setupForm();
-				this.registerListener();
+				this.#setupForm();
+				this.#registerOpenListener();
 			}
 
-			getCloseButton() {
-				const closeButton = document.createElement('button')
-				closeButton.setAttribute('type', 'submit')
-				closeButton.classList.add('secondary');
-				closeButton.textContent = 'Close';
-				return closeButton;
-			}
-
-			setupForm() {
+			#setupForm() {
 				const article = document.createElement('article');
-				const form = document.createElement('form');
-				form.setAttribute('type', 'dialog')
-
-				const title = document.createElement('h2');
-				title.textContent = this.name;
-				form.appendChild(title);
-				form.appendChild(this.content);
-				form.appendChild(this.getCloseButton());
-
-				article.appendChild(form);
+				const form = new Form('dialog', this.name, this.content)
+				article.appendChild(form.element);
 				this.dialog.appendChild(article);
-
 			}
 
-			registerListener() {
+			#registerOpenListener() {
 				const dialog = this.dialog;
-				console.log(dialog);
 				this.openButton.addEventListener("click", () => {
-					console.log('clicked');
 					dialog.showModal();
 				});
 			}

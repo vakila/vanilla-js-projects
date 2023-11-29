@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>Professional JavaScript</title>
+	<title>Part 1 | Professional JavaScript</title>
 	<link rel="icon" type="image/svg+xml" href="/professional-javascript/favicon.svg" />
 
 
@@ -918,51 +918,221 @@
 			</section>
 
 
-
 			<section data-markdown data-separator-vertical="\n--\n">
 				<textarea data-template>
-
-					## Moar Browser APIs!
-
-
+					## Classy JS continued
+					
 					--
 
-					### Media Devices
+					### Declaring & instantiating
 
 					```js
-					const devices = navigator.mediaDevices;
-					const deviceList = await devices.enumerateDevices();
-
-					console.log(deviceList);
-					// Array [ MediaDeviceInfo, MediaDeviceInfo ]
-
-					console.log(deviceList[0])
+					class Meme {
+						constructor(img, text) {
+							this.img = img;
+							this.text = text;
+						}
+					}
+					
+					const fancyPooh = new Meme('fancyPooh.jpg', 'I am fancy');
 					```
 
 					--
 
-					### `getUserMedia`
+					### Methods
+
+		
+					```js
+					class Meme {
+						constructor(img, text) {
+							this.img = img;
+							this.text = text;
+						}
+
+						lol() {
+							console.log('lololol');
+						}
+					}
+
+					const fancyPooh = new Meme('fancyPooh.jpg', 'I am fancy');
+					fancyPooh.lol() // lololol
+					```
+
+					--
+
+					### Override methods
 
 					```js
+					class Meme {
+						constructor(img, text) {
+							this.img = img;
+							this.text = text;
+						}
 
-					const avStream = await navigator.mediaDevices.getUserMedia({
-						audio: true,
-						video: true 
-					});
-
+						toString() {
+							return `Meme: '${this.text}'`
+						}
+					}
 					```
+
+					```js
+					fancyPooh.toString()
+					// Meme: 'I am fancy'
+					```
+
+					--
+
+					### Properties, Getters & Setters 
+
+					```js
+					class Meme {
+						constructor(img, text) {
+							this.img = img;
+							this.text = text;
+						}
+
+						get imgType() {
+							const [name, ext] = this.img.split('.');
+							return ext;
+						}
+
+						set imgType(newExt) {
+							const [name] = this.img.split('.');
+							this.img = [name, newExt].join(".");
+						}
+					}
+					```
+					--
+
+					```js
+					fancyPooh.img // 'fancyPooh.jpg'
+					fancyPooh.imgType // 'jpg'
+					fancyPooh.imgType = 'png'
+					fancyPooh.img // 'fancyPooh.png'
+					```
+
+					--
+
+					### Private properties/methods
+
+					```js
+					class Meme {
+						#img;
+						constructor(img, text) {
+							this.#img = img;
+							this.text = text;
+							this.#whisper();
+						}
+
+						get image() {
+							return this.#img;
+						}
+
+						set image(newImage) {
+							this.#img = newImage;
+						}
+
+						#whisper() {
+							console.log('my secret img is', this.#img);
+						}
+
+						yell() {
+							console.log('MY TEXT IS', this.text.toUpperCase());
+						}
+					}
+
+					--
+
+					```js
+					const fancyPooh = new Meme('pooh.jpg', 'so fancy');
+					// my secret img is pooh.jpg
+
+					fancyPooh.img // undefined
+					fancyPooh.#img // Error
+
+					fancyPooh.image // 'pooh.jpg'
+					fancyPooh.image = 'otherPooh.jpg'
+
+					fancyPooh.#whisper() // Error
+
+					fancyPooh.yell() // MY TEXT IS SO FANCY
+					```
+
+					--
+
+					### Inheritance
+
+					```js
+					class GifMeme extends Meme {
+						constructor(img, text) {
+							if (!img.endsWith('.gif')) {
+								throw new Error('Not a gif');
+							}
+							super(img, text);
+						}
+					}
+
+					const failPooh = new GifMeme('pooh.jpg')
+					// Error: Not a gif
+					const gifPooh = new GifMeme('pooh.gif')
+					// my secret img is pooh.gif
+					gifPooh.image // gifPooh
+					```
+
+					--
+
+					<img src="../assets/this-pooh.gif" alt="Gif of Winnie the Pooh nodding approvingly and pointing up, with caption 'THIS'" width="500" />
 
 				</textarea>
 			</section>
+
+
 
 			<section data-markdown data-separator-vertical="\n--\n">
 				<textarea data-template>
 					## Quick Win
-					### Selfie Cam
+					### Dark Modal
 
+					--
+
+					### Let's have a `dialog`
+
+					```html 
+					<dialog>
+						<form type="dialog">
+							<button type="submit">Close</button>
+						</form>
+					</dialog>
+					```
+
+					--
+
+					### Modal vs. non-modal
+
+					```js
+					const dialog = document.querySelector('dialog');
+					dialog.show();
+					dialog.showModal();
+					```
+					--
+
+					When your user wants to click on something else but you called `.showModal()`
+
+					<img src="../assets/dialogue.gif" alt="Clip from the Simpsons of Marge saying 'But we've opened up a dialogue'" width="500" />
+
+					--
+
+					### `dark-modal/index.html`
+
+					Turn our dark mode toggle into a Modal dialog
+					
+					- Finish the `Form` and `Modal` class definitions
+					- Satisfy the expected behavior
+			
 
 				</textarea>
 			</section>
+
 
 		</div>
 	</div>
