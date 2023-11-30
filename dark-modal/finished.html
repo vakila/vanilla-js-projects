@@ -79,7 +79,9 @@
 				this.element.appendChild(this.heading);
 				this.element.appendChild(content);
 				this.element.appendChild(this.closeButton);
+
 			}
+
 
 		}
 
@@ -102,6 +104,12 @@
 				const form = new Form('dialog', this.name, this.content)
 				article.appendChild(form.element);
 				this.dialog.appendChild(article);
+
+				const dialog = this.dialog
+				form.element.addEventListener('submit', function (event) {
+					event.preventDefault();
+					dialog.close();
+				})
 			}
 
 			#registerOpenListener() {
