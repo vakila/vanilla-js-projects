@@ -1,0 +1,356 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Part 3 | Professional JavaScript</title>
+	<link rel="icon" type="image/svg+xml" href="/professional-javascript/favicon.svg" />
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css"
+		integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css"
+		integrity="sha512-ITH3NSfntO7uI5n+BnxGNXpzDUoOsmAXuG37UDONLxNYIdc0EBBOOQ1xyc+t9ag9ETSuBXFApx+Rod0uURfDYw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css"
+		integrity="sha512-bfCyfT+5Js2CKjpiF7yCtTcNlNTtcdAIHV8DfGLCQuTfTEHTU9uEvhQ/Ty4zv3IRtkFQu8DKeM2MHGka+K/cxA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!-- Theme used for syntax highlighted code -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/night-owl.min.css" integrity="sha512-i5X6Fdn/ZqvGSqPrdMa3FgcpXM/Nr6YccSKFYT93zljl/HZDEpvBbE5Pxp91eiWGccZLrL/LDQJd7fjTRYsVaA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/a11y-dark.min.css"
+		integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <script type="module" crossorigin src="/professional-javascript/assets/styles-vbg5WpPf.js"></script>
+  <link rel="stylesheet" crossorigin href="/professional-javascript/assets/styles-JNEisD2D.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Part 3
+
+					### Hackathon 
+
+					--
+					### Goals
+
+					- Keep refining our dev workflow
+					- Deploy a project to prod
+					- See our quick-wins come together
+					- Get hacking & get creative
+
+					--
+					### Ready?
+
+					# Let's go!
+
+					</textarea>
+			</section>
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Moar Dev Tools
+
+					<img src="../assets/tools.gif" alt="Massive rotating toolbox" width="300" />
+
+					--
+
+					## [git](https://git-scm.com/) & [Github](https://github.com)
+
+					Version control & collaboration (& more)
+
+					```shell
+					$ git clone https://github.com/vakila/selfie-cam
+					$ cd selfie-cam
+					$ git checkout -b bugfix
+
+					...edit files... 
+
+					$ git add .
+					$ git commit -m "Fix that pesky bug"
+					$ git push -u origin bugfix
+					```
+
+
+					--
+
+					## [eslint](https://eslint.org/) 
+
+					Syntax control & (some) bug catching
+
+					```shell
+					$ npm init @eslint/config
+					```
+
+					```js
+					// package.json
+					// ...
+					  "scripts": {
+						//...
+						"lint": "eslint ."
+					  }
+					``` 
+
+					```shell
+					$ npm run lint
+					```
+
+					--
+
+					## [prettier](https://prettier.io/)
+
+					Style control & auto-formatting
+
+					```shell
+					$ npm install --save-dev --save-exact prettier
+					```
+
+					```js
+					// package.json
+					// ...
+					  "scripts": {
+						//...
+						"format": "prettier . --write"
+					  }
+					``` 
+					
+					```shell
+					$ npm run format
+					```
+
+					--
+
+					### VSCode does it all
+
+					- git & Github built in ([source control](https://code.visualstudio.com/docs/sourcecontrol/overview) tab)
+					- [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extension
+					- [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension
+
+
+				</textarea>
+			</section>
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Deploying
+
+					<img src="../assets/liftoff.webp" alt="Apollo 13 mission liftoff" width="500" />
+					--
+
+					### dev vs. prod
+					
+					<span></span> | <span></span>
+					-- | --
+					<span class="accent">dev</span> | "Move fast, break things"
+					<span class="accent">prod</span> | Deliver a working site to real users
+
+					--
+
+					### In Vite:
+
+					<span></span> | <span></span>
+					-- | --
+					<span class="accent">dev</span> | Builds targets newest browsers<br>`dev` server watches for changes & reloads
+					<span class="accent">prod</span> | Build targets wider range of browsers<br>`preview` serves `/dist`, no updates
+
+					--
+
+					### Configuring Vite
+
+					We can customize:
+					- The base path where our site will be hosted (e.g. anjana.dev/selfie-cam/)
+					- How the build should work
+					- Settings for the `dev` & `preview` servers (e.g. port)
+
+
+					--
+
+					```js
+					// my-project/vite.config.js
+
+					import { defineConfig } from "vite"; // VSCode autocomplete
+
+					export default defineConfig({
+						base: "https://my.site.com/project/", 
+						server: {
+							port: 1234,
+						},
+						build: {
+							target: [ "firefox78", "safari14" ],
+						},
+						//... lots of other options
+					});
+					```
+
+					--
+
+					### Hosting static sites
+
+					Popular options: 
+					- [Github Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages)
+					- [Netlify](https://docs.netlify.com/get-started/)
+					- [Vercel](https://vercel.com/docs/getting-started-with-vercel)
+
+					--
+
+					### Ship that Selfie Cam!
+
+					[vitejs.dev/guide/static-deploy](https://vitejs.dev/guide/static-deploy#github-pages)
+
+
+
+				</textarea>
+			</section>
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					### Pulling it all together
+
+					<img src="../assets/voltron.gif" alt="Clip from Voltron of several robot lions combining into one giant robot warrior" width="500" />
+
+					--
+
+					### Quick Wins 
+					
+					<span>+</span>
+					
+					### Selfie Cam 
+					
+					<span>+</span>
+					
+					### A little extra code
+
+					equals...
+
+					--
+
+
+					## <span class="impact accent">MEME ME!</span>
+
+					<img src="../assets/can-has-meme.png" alt="Selfie of Anjana with meme-style text overlay that reads 'I can has meme?'" width="500"/>
+
+					[anjana.dev/meme-me](https://anjana.dev/meme-me)
+					[github.com/vakila/meme-me](https://github.com/vakila/meme-me)
+
+
+				</textarea>
+			</section>
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					## Hackathon
+
+					<img src="../assets/hack-side.gif" alt="Star Wars style text saying 'Welcome to the hack side'" width="500" />
+
+					--
+
+					1. Fork the Github project  
+					1. Make it your own
+					1. Deploy your version
+					1. Show off your work!
+
+					--
+
+					### Feature brainstorm 
+
+					- Custom text placement
+					- More text nodes
+					- Additional settings, e.g.
+					  - More font choices
+					  - Different colors for each text 
+					  - Filters on the image
+					- Emoji/Stickers
+					- Share button
+					- ...anything else you can think of!
+					
+
+
+				</textarea>
+			</section>
+
+
+			<section data-markdown data-separator-vertical="\n--\n">
+				<textarea data-template>
+					# Recap
+
+					<img src="../assets/cant-have-bugs.png" alt="Selfie of Anjana with meme-style text saying 'You can't have bugs in your code... if you don't write any code'" width="500" />
+
+					--
+
+					## <span class="comic-sans" >so <span class="accent">javascript</span>, much wow</span>
+
+					- Browser internals (Stack, Heap, Event Loop)
+					- Asynchronous code (callbacks, `setTimeout`, etc.)
+					- Programming Paradigms (FP, OOP)
+					- The prototype chain
+					- Iteration protocols (`[Symbol.iterator]`, generators)
+					- Classes & inheritance
+					- Browser APIs (e.g. DOM, Canvas, MediaDevices)
+
+					
+					--
+
+					## <span class="comic-sans">very <span class="accent">workflow</span>, amaze</span>
+
+					- Node.js 
+					- npm & packages
+					- ES Modules & `import`/`export`
+					- Vite for dev & prod
+					- Linting & formatting
+					- Production deploys
+					- Github & open source
+
+					--
+
+					<img src="../assets/force.gif" alt="Star Wars style text saying 'May the force be with you'" width="500" />
+
+					</textarea>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"
+		integrity="sha512-131e3mIrDAyUD075SVzvIjS0g97uDg0+/qAobDHd++h+lgFi4z88DVOpidm06jpb+0PzK4kcm9w79r6EHV0SkA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"
+		integrity="sha512-nLsCkPS/rdxRVOkxiKnld9KhQ24V/5kRChzSZ3MoFODykbWyBlQRsHLrbpN3J4LabYBnXIp1EnRIo3ifvyiQIg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.min.js"
+		integrity="sha512-QAU7Ux8iEB53koLKFCtddfFp0D1+uQWoX3ROnRDLeiE98XHOkMciaup0Spc014jQAuJaqz8VjUZdBqriheI4Lg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"
+		integrity="sha512-U3fPDUX5bMrn1wnYqjaK44MFA9E6MKS+zPAg9WPAGF5XhReBeDj3FGaA831CjueG+YJxYA3WaO/m33kMIoOs/A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<!-- CopyCode plugin for copy button on code samples -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/reveal.js-copycode@1.0.4/plugin/copycode/copycode.js"></script>
+
+	<script>
+		// Slides powered by revealjs.com
+
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode]
+		});
+
+	</script>
+
+</body>
+
+</html>
