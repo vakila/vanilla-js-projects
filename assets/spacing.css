@@ -1,0 +1,9 @@
+body>header,
+body>main {
+    padding-bottom: 0
+}
+
+body>main,
+body>footer {
+    padding-top: 0
+}
